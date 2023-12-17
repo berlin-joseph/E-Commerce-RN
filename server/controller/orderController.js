@@ -14,6 +14,20 @@ exports.createOrder = async (req, res) => {
       })
     );
 
+    const totalPrices = await Promise.all(
+      orderItemsId.map(async (orderItemId) => {
+        const orderItem = await orderItemModel
+          .findById(orderItemId)
+          .populate("product", "price")
+          .exec();
+
+        const price = orderItem.product.price * orderItem.quantity;
+        return price;
+      })
+    );
+
+    const totalPrice = totalPrices.reduce((acc, curr) => acc + curr, 0);
+
     const order = await orderModel.create({
       orderItems: orderItemsId,
       shippingAddress1: req.body.shippingAddress1,
@@ -23,12 +37,12 @@ exports.createOrder = async (req, res) => {
       country: req.body.country,
       Phone: req.body.Phone,
       status: req.body.status,
-      // totalPrice: totalPrice,
+      totalPrice: totalPrice,
       user: req.body.user,
       dateOfOrder: Date.now(),
     });
 
-    console.log(order, "order value");
+    // console.log(order, "order value");
 
     if (!order) {
       return res.status(400).send({
@@ -86,7 +100,10 @@ exports.getAllOrdersById = async (req, res) => {
     const order = await orderModel
       .findById(req.params.id)
       .populate("user", "name")
-      .populate("orderItems");
+      .populate({
+        path: "orderItems",
+        populate: { path: "product", populate: "category" },
+      });
 
     if (!order) {
       return res.status(404).json({
@@ -109,5 +126,59 @@ exports.getAllOrdersById = async (req, res) => {
       message: "Error retrieving orders",
       error: error.message,
     });
+  }
+};
+
+//update order status By Id
+exports.updateOrdersById = async (req, res) => {
+  try {
+    const order = await orderModel.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({
+        status: false,
+        success: false,
+        message: "No orders found",
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      success: true,
+      message: "All orders updated successfully",
+      data: order,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      success: false,
+      message: "Error retrieving orders",
+      error: error.message,
+    });
+  }
+};
+//delete order By Id
+exports.deleteOrdersById = async (req, res) => {
+  try {
+    const order = await orderModel.findByIdAndRemove(req.params.id);
+
+    if (order) {
+      for (const orderItem of order.orderItems) {
+        await orderItemModel.findByIdAndRemove(orderItem);
+      }
+      return res
+        .status(200)
+        .json({ success: true, message: "The order is deleted!" });
+    } else {
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found!" });
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
   }
 };
