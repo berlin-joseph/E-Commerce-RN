@@ -161,6 +161,7 @@ exports.updateOrdersById = async (req, res) => {
     });
   }
 };
+
 //delete order By Id
 exports.deleteOrdersById = async (req, res) => {
   try {
@@ -182,3 +183,39 @@ exports.deleteOrdersById = async (req, res) => {
     return res.status(500).json({ success: false, error: err.message });
   }
 };
+
+//get total sale
+exports.totalSale = async (req, res) => {
+  try {
+    const order = await orderModel.aggregate([
+      { $group: { _id: null, totalSale: { $sum: "$totalPrice" } } },
+    ]);
+
+    if (order) {
+      return res
+        .status(200)
+        .send({ success: true, status: true, totalSale: order });
+    }
+    return res
+      .status(400)
+      .send({ success: true, status: true, message: "not found" });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+
+//get total order count
+exports.totalOrderCount = async(req,res)=>{
+try {
+    const order = await orderModel.countDocuments();
+
+    if (order) {
+      return res
+        .status(201)
+        .send({ status: true, success: true, count: order });
+    }
+} catch (error) {
+   return res.status(500).json({ success: false, error: err.message });
+}
+}
