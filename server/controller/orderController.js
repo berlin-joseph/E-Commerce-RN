@@ -1,6 +1,7 @@
 const orderItemModel = require("../models/orderItemModel");
 const orderModel = require("../models/orderModel");
 
+//create new order -
 exports.createOrder = async (req, res) => {
   try {
     const orderItems = req.body.orderItems;
@@ -200,14 +201,13 @@ exports.totalSale = async (req, res) => {
       .status(400)
       .send({ success: true, status: true, message: "not found" });
   } catch (error) {
-    return res.status(500).json({ success: false, error: err.message });
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
 
-
 //get total order count
-exports.totalOrderCount = async(req,res)=>{
-try {
+exports.totalOrderCount = async (req, res) => {
+  try {
     const order = await orderModel.countDocuments();
 
     if (order) {
@@ -215,7 +215,30 @@ try {
         .status(201)
         .send({ status: true, success: true, count: order });
     }
-} catch (error) {
-   return res.status(500).json({ success: false, error: err.message });
-}
-}
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+//get user order by Id
+exports.getUserOrderById = async (req, res) => {
+  try {
+    const order = await orderModel
+      .find({ user: req.params.user_id })
+      .populate({
+        path: "orderItems",
+        populate: { path: "product", populate: { path: "category" } },
+      })
+      .sort({ dateOfOrder: -1 })
+      .exec();
+    if (order && order.length > 0) {
+      return res.status(200).send({ status: true, success: true, data: order });
+    } else {
+      return res
+        .status(404)
+        .send({ status: false, success: false, message: "Order not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};

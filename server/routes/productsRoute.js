@@ -8,6 +8,7 @@ const {
   deleteProductsById,
   getProductCount,
   getFeatured,
+  imageCollection,
 } = require("../controller/productsController");
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router
 router.route("/products/count").get(getProductCount);
 router.route("/products/featured").get(getFeatured);
 router.route("/products/featured/:count").get(getFeatured);
+router.route("/products/image-collection/:id").put(imageCollection);
 
 router
   .route("/products/:id")
