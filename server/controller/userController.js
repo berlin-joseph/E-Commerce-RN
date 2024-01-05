@@ -150,29 +150,39 @@ exports.loginUser = async (req, res) => {
         .status(400)
         .send({ success: true, message: "user not available " });
     } else {
-      const password = bcrypt.compareSync(
-        req.body.password,
-        userExist.password
-      );
-      if (!password) {
-        return res
-          .status(401)
-          .send({ success: false, message: "Invalid password" });
-      } else {
-        const secret = crypto.randomBytes(32).toString("hex");
-        const token = jwt.sign(
-          {
-            userId: userExist._id,
-            isAdmin: userExist.isAdmin,
-          },
-          secret
+      if (userExist.verified === true) {
+        const password = bcrypt.compareSync(
+          req.body.password,
+          userExist.password
         );
-        return res.status(200).send({
-          success: true,
-          message: "user logged In",
-          user: userExist.email,
-          token: token,
-        });
+        if (!password) {
+          return res
+            .status(401)
+            .send({ success: false, message: "Invalid password" });
+        } else {
+          const secret = crypto.randomBytes(32).toString("hex");
+          const token = jwt.sign(
+            {
+              userId: userExist._id,
+              isAdmin: userExist.isAdmin,
+            },
+            secret
+          );
+          return res.status(200).send({
+            success: true,
+            message: "user logged In",
+            user: userExist.email,
+            token: token,
+          });
+        }
+      } else {
+        return res
+          .status(200)
+          .send({
+            status: true,
+            success: false,
+            message: "verify your email address",
+          });
       }
     }
   } catch (error) {
