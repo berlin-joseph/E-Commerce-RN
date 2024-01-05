@@ -7,9 +7,8 @@ const authJwt = () => {
     algorithms: ["HS256"],
     isRevoked: async function isRevoked(req, token) {
       if (!token.payload.isAdmin) {
-        return true; // if the isAdmin flag in payload is false, then we reject the token
+        return true;
       }
-
       return false;
     },
   }).unless({
@@ -18,6 +17,7 @@ const authJwt = () => {
       "/api/v1/users/auth/login",
       { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
       { url: /\/api\/v1\/category(.*)/, methods: ["GET", "OPTIONS"] },
+      { url: /\/api\/v1\/verify(.*)/, methods: ["GET", "OPTIONS"] },
       { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
     ],
   });

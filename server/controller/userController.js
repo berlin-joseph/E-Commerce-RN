@@ -1,16 +1,46 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
-//create user - /api/v1/users
+//send email
+const sendVerificationEmail = async (user, verificationToken) => {
+  try {
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "l.berlinjoe@gmail.com",
+        pass: "vnma xleq tiut kpnn",
+      },
+    });
+
+    const mailOptions = {
+      from: "E-Shoppy.com",
+      to: user.email,
+      subject: "Verification Email",
+      text: `Please click the verification link to verify your email: http://localhost:3000/api/v1/verify/${verificationToken}`,
+    };
+
+    // Send mail
+    await transport.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Failed to send verification email:", error);
+    throw new Error("Failed to send verification email");
+  }
+};
+
+// Create user - /api/v1/users
 exports.createUser = async (req, res) => {
   try {
     const userExist = await User.findOne({ email: req.body.email });
     if (userExist) {
       return res
         .status(400)
-        .send({ success: true, message: "User Already available" });
+        .send({ success: false, message: "User already exists" });
     } else {
+      const verificationToken = crypto.randomBytes(100).toString("hex");
+
       const user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -24,22 +54,55 @@ exports.createUser = async (req, res) => {
           country: req.body.address.country,
           zipCode: req.body.address.zipCode,
         },
+        verificationToken: verificationToken,
       });
 
-      const newUser = await user.save();
+      // Save the user object with verification token
+      await user.save();
+
+      // Send verification email
+      await sendVerificationEmail(user, verificationToken);
 
       return res.status(201).send({
         success: true,
-        message: "user created successfully",
-        user: newUser,
+        message: "User created successfully",
+        user: user,
       });
     }
   } catch (error) {
+    console.error("Error creating user:", error);
     return res
       .status(400)
-      .send({ success: false, message: "user not created" });
+      .send({ success: false, message: "User not created" });
   }
 };
+
+//verify email
+exports.verifyEmail = async (req, res) => {
+  try {
+    const token = req.params.token;
+
+    const user = await User.findOne({ verificationToken: token });
+
+    if (user) {
+      user.verified = true;
+      user.verificationToken = undefined;
+
+      // Save the updated user
+      await user.save();
+
+      return res.status(200).send({ message: "Email verified successfully" });
+    } else {
+      return res.status(400).send({ message: "Invalid verification token" });
+    }
+  } catch (error) {
+    console.error("Error verifying email:", error);
+    return res
+      .status(400)
+      .send({ success: false, message: "Email verification failed" });
+  }
+};
+
 
 //get all users - /api/v1/users
 exports.getAllUsers = async (req, res) => {

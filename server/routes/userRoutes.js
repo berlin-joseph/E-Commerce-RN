@@ -8,6 +8,7 @@ const {
   deleteUser,
   deleteUserById,
   deleteAllUser,
+  verifyEmail,
 } = require("../controller/userController");
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.route("/users/auth/login").post(loginUser);
 router.route("/users/auth/register").post(createUser);
 router.route("/users/:id").get(getUserById).delete(deleteUserById);
 router.route("/users/get/count").get(userCount);
+router.route("/verify/:token").get(verifyEmail);
 
 module.exports = router;
