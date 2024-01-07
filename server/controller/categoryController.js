@@ -6,7 +6,6 @@ exports.createCategory = async (req, res) => {
     const category = new Category({
       name: req.body.name,
       icon: req.body.icon,
-      color: req.body.color,
     });
 
     const savedCategory = await category.save();
