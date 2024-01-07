@@ -13,12 +13,12 @@ router
   .route("/category")
   .get(getCategory)
   .post(createCategory)
-  .delete(deleteCategory);
+ router.route("/category/delete").delete(deleteCategory);
 
-router
-  .route("/category/:id")
-  .delete(deleteCategoryById)
-  .get(getCategoryById)
-  .put(updateCategoryById);
+ router
+   .route("/category/:id")
+   .get(getCategoryById)
+   .put(updateCategoryById)
+   .delete(deleteCategoryById);
 
 module.exports = router;

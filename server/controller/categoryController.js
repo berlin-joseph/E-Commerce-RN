@@ -178,7 +178,7 @@ exports.deleteCategoryById = async (req, res) => {
     } else {
       return res
         .status(500)
-        .send({ success: false, message: "Category deletion failed" });
+        .send({ success: false, message: "Category delete failed" });
     }
   } catch (error) {
     return res.status(500).send({

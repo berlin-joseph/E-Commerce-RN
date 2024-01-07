@@ -6,7 +6,7 @@ const authJwt = () => {
     secret: secret,
     algorithms: ["HS256"],
     isRevoked: async function isRevoked(req, token) {
-      if (!token.payload.isAdmin) {
+      if (!token.payload || !token.payload.isAdmin) {
         return true;
       }
       return false;
@@ -15,8 +15,8 @@ const authJwt = () => {
     path: [
       "/api/v1/users/auth/register",
       "/api/v1/users/auth/login",
-      { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
       { url: /\/api\/v1\/category(.*)/, methods: ["GET", "OPTIONS"] },
+      { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
       { url: /\/api\/v1\/verify(.*)/, methods: ["GET", "OPTIONS"] },
       { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
     ],

@@ -160,7 +160,8 @@ exports.loginUser = async (req, res) => {
             .status(401)
             .send({ success: false, message: "Invalid password" });
         } else {
-          const secret = crypto.randomBytes(32).toString("hex");
+          
+          const secret = process.env.SECRET_KEY;
           const token = jwt.sign(
             {
               userId: userExist._id,

@@ -29,18 +29,7 @@ const productSlice = createSlice({
     addProducts: (state, action) => {},
     updateProducts: (state, action) => {},
     deleteProducts: (state, action) => {},
-    filterProducts: (state, action) => {
-      const {searchQuery} = action.payload;
-      if (searchQuery) {
-        // Filter products based on the search query
-        state.filteredProducts = state.products.filter(product =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase()),
-        );
-      } else {
-        // If search query is empty, reset filteredProducts to all products
-        state.filteredProducts = state.products;
-      }
-    },
+    filterProducts: (state, action) => {},
   },
   extraReducers: builder => {
     builder

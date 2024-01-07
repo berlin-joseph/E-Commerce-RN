@@ -8,7 +8,6 @@ import {
 } from 'react-native-responsive-dimensions';
 
 const ProductsContainer = ({data}) => {
-  console.log(data, 'container');
   return (
     <TouchableOpacity
       style={{

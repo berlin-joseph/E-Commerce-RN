@@ -2,6 +2,7 @@ import {
   Alert,
   Image,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -41,9 +42,9 @@ const Login = ({navigation}) => {
 
   const handleLogin = () => {
     dispatch(fetchUser({email, password}))
-      .unwrap()
       .then(response => {
         if (response.success === true) {
+          console.log(response);
           const token = response.token;
           AsyncStorage.setItem('auth-val-token', token);
           navigation.replace('Bottom');
@@ -58,6 +59,11 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.SafeAreaView}>
+      <StatusBar
+        animated={false}
+        backgroundColor="red"
+        barStyle="dark-content"
+      />
       <Image source={require('../assets/Logo.png')} style={styles.Image} />
       <Text
         style={{
@@ -65,6 +71,8 @@ const Login = ({navigation}) => {
           color: '#FB187E',
           fontWeight: '900',
           fontSize: responsiveFontSize(2),
+          marginTop: responsiveScreenHeight(5),
+          marginBottom: responsiveScreenHeight(2),
         }}>
         LOGIN
       </Text>
@@ -104,7 +112,10 @@ const Login = ({navigation}) => {
             Don’t have an account?
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={{textAlign: 'center', color: '#FB187E'}}>Join us</Text>
+            <Text style={{textAlign: 'center', color: '#FB187E'}}>
+              {' '}
+              Join us
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -117,7 +128,7 @@ export default Login;
 const styles = StyleSheet.create({
   SafeAreaView: {
     flex: 1,
-    marginTop: responsiveScreenHeight(10),
+    marginTop: responsiveScreenHeight(5),
     margin: responsiveScreenHeight(1),
   },
   InputContainer: {
@@ -128,8 +139,8 @@ const styles = StyleSheet.create({
   },
   Image: {
     alignSelf: 'center',
-    height: responsiveScreenWidth(50),
-    width: responsiveScreenWidth(50),
+    height: responsiveScreenWidth(40),
+    width: responsiveScreenWidth(40),
   },
   Text: {
     marginVertical: responsiveScreenHeight(1),

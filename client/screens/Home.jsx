@@ -10,7 +10,6 @@ import {
   Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchProducts} from '../Redux/slice/productSlice';
 import {filterProducts} from '../Redux/slice/productSlice';
@@ -26,62 +25,28 @@ import {
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
 import ProductsContainer from '../components/Products/ProductsContainer';
+import {fetchCategory} from '../Redux/slice/categorySlice';
 
 const Home = () => {
   const dispatch = useDispatch();
   const {products, status, error} = useSelector(state => state.products);
-
-  console.log(products, 'Home Screen:Products');
+  const {category} = useSelector(state => state.category);
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchCategory());
   }, [dispatch]);
 
-  if (status === 'loading') {
-    return <Text>Loading...</Text>;
-  }
+  // if (status === 'loading') {
+  //   return <Text>Loading...</Text>;
+  // }
 
-  if (status === 'failed') {
-    return <Text>Error: {error}</Text>;
-  }
+  // if (status === 'failed') {
+  //   return <Text>Error: {error}</Text>;
+  // }
 
   //
-  const list = [
-    {
-      id: '0',
-      image: 'https://m.media-amazon.com/images/I/41EcYoIZhIL._AC_SY400_.jpg',
-      name: 'Home',
-    },
-    {
-      id: '1',
-      image:
-        'https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/blockbuster.jpg',
-      name: 'Deals',
-    },
-    {
-      id: '3',
-      image:
-        'https://images-eu.ssl-images-amazon.com/images/I/31dXEvtxidL._AC_SX368_.jpg',
-      name: 'Electronics',
-    },
-    {
-      id: '4',
-      image:
-        'https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/All_Icons_Template_1_icons_01.jpg',
-      name: 'Mobiles',
-    },
-    {
-      id: '5',
-      image:
-        'https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/music.jpg',
-      name: 'Music',
-    },
-    {
-      id: '6',
-      image: 'https://m.media-amazon.com/images/I/51dZ19miAbL._AC_SY350_.jpg',
-      name: 'Fashion',
-    },
-  ];
+
   const images = [
     'https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg',
     'https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/PD23/Launches/Updated_ingress1242x550_3.gif',
@@ -218,7 +183,7 @@ const Home = () => {
   //
 
   return (
-    <SafeAreaView style={styles.SafeAreaView}>
+    <View style={styles.SafeAreaView}>
       <ScrollView
         style={[styles.ScrollView, {backgroundColor: 'white'}]}
         showsVerticalScrollIndicator={false}>
@@ -244,7 +209,7 @@ const Home = () => {
           </TouchableOpacity>
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {list.map((item, index) => (
+          {category.map((item, index) => (
             <TouchableOpacity
               key={index}
               style={{
@@ -388,11 +353,11 @@ const Home = () => {
             flexWrap: 'wrap',
           }}>
           {products?.data?.map((products, index) => (
-            <ProductsContainer data={products} key={index} />
+            <ProductsContainer data={products} key={products._id} />
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -401,7 +366,6 @@ export default Home;
 const styles = StyleSheet.create({
   SafeAreaView: {
     flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   InputComponent: {width: responsiveScreenWidth(80)},
   container: {
