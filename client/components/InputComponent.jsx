@@ -8,6 +8,7 @@ const InputComponent = ({
   text,
   value,
   onChangeText,
+  onSubmitEditing,
 }) => {
   return (
     <View style={container}>
@@ -18,6 +19,7 @@ const InputComponent = ({
         style={text}
         value={value}
         onChangeText={onChangeText}
+        onSubmitEditing={onSubmitEditing}
       />
     </View>
   );

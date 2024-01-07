@@ -60,7 +60,9 @@ exports.createProduct = async (req, res) => {
       }
 
       const imageName = req.file.filename;
-      const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+      const basePath = `${req.protocol}://${req.get(
+        "host"
+      )}/public/uploads/Products`;
 
       const product = new Product({
         name: req.body.name,

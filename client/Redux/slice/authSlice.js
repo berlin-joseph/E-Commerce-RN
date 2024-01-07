@@ -5,6 +5,7 @@ import {baseUrl} from '../constants/url';
 const initialState = {
   isLoggedIn: false,
   user: null,
+  token: null,
   loading: false,
   error: null,
 };
@@ -29,25 +30,35 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action) => {},
-    logout: state => {},
+    logout: state => {
+      state.user = null;
+      state.token = null;
+    },
   },
   extraReducers: builder => {
     builder
       .addCase(fetchUser.pending, state => {
-        state.status = 'loading';
+        state.status = true;
+        state.user = null;
+        state.error = null;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.products = action.payload;
+        state.status = false;
+        state.user = action.payload;
+        state.error = null;
       })
       .addCase(fetchUser.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = false;
+        state.error = action.error.message;
+        if (action.error.message === 'Request failed with status code 401') {
+          state.error = 'Access Denied! Invalid Credentials';
+        }
         state.error = action.error.message;
       });
   },
 });
 
-const {login} = authSlice.actions;
-
+export const {signUp, login, logout} = authSlice.actions;
 export default authSlice.reducer;
+export const selectCurrentUser = state => state.auth.user;
+export const selectCurrentToken = state => state.auth.token;

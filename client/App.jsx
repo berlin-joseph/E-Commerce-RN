@@ -14,6 +14,7 @@ import User from './screens/User';
 import {Provider} from 'react-redux';
 import {store} from './Redux/Store';
 import {PaperProvider} from 'react-native-paper';
+import SignUp from './screens/SignUp';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -75,6 +76,11 @@ function App() {
           <Stack.Screen
             name="Login"
             component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUp}
             options={{headerShown: false}}
           />
           <Stack.Screen

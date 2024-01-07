@@ -1,26 +1,68 @@
+const multer = require("multer");
 const Category = require("../models/CategoryModel");
+
+// Multer middleware setup
+// ...
+const fileType = {
+  "image/png": "png",
+  "image/jpg": "jpg",
+  "image/jpeg": "jpeg",
+};
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const isValid = fileType[file.mimetype];
+    let uploadError = new Error("Invalid Upload Format");
+
+    if (isValid) {
+      uploadError = null;
+    }
+
+    cb(uploadError, "public/uploads");
+  },
+  filename: function (req, file, cb) {
+    const fileName = file.originalname.split(" ").join("-");
+    const extension = fileType[file.mimetype];
+    cb(null, `${fileName}-${Date.now()}.${extension}`);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 //create category - api/v1/category
 exports.createCategory = async (req, res) => {
   try {
-    const category = new Category({
-      name: req.body.name,
-      icon: req.body.icon,
-    });
+    upload.single("image")(req, res, async function (err) {
+      if (err instanceof multer.MulterError) {
+        return res
+          .status(400)
+          .send({ success: false, message: "File upload error" });
+      } else if (err) {
+        return res.status(400).send({ success: false, message: err.message });
+      }
 
-    const savedCategory = await category.save();
-    if (savedCategory) {
-      return res.status(201).send({
-        success: true,
-        message: "Category Created Successfully",
-        data: savedCategory,
+      const imageName = req.file.filename;
+      const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+
+      const category = new Category({
+        name: req.body.name,
+        image: `${basePath}/${imageName}`,
       });
-    } else {
-      return res.status(500).send({
-        success: false,
-        message: "Failed to create Category",
-      });
-    }
+
+      const savedCategory = await category.save();
+      if (savedCategory) {
+        return res.status(201).send({
+          success: true,
+          message: "Category Created Successfully",
+          data: savedCategory,
+        });
+      } else {
+        return res.status(500).send({
+          success: false,
+          message: "Failed to create Category",
+        });
+      }
+    });
   } catch (error) {
     return res.status(500).send({
       success: false,

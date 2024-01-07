@@ -4,6 +4,7 @@ import {baseUrl} from '../constants/url';
 
 const initialState = {
   products: [],
+  filteredProducts: [],
   status: 'idle',
   error: null,
 };
@@ -25,14 +26,20 @@ const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    addProducts: (state, action) => {
-      // You can handle adding products here
-    },
-    updateProducts: (state, action) => {
-      // You can handle updating products here
-    },
-    deleteProducts: (state, action) => {
-      // You can handle deleting products here
+    addProducts: (state, action) => {},
+    updateProducts: (state, action) => {},
+    deleteProducts: (state, action) => {},
+    filterProducts: (state, action) => {
+      const {searchQuery} = action.payload;
+      if (searchQuery) {
+        // Filter products based on the search query
+        state.filteredProducts = state.products.filter(product =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+      } else {
+        // If search query is empty, reset filteredProducts to all products
+        state.filteredProducts = state.products;
+      }
     },
   },
   extraReducers: builder => {
@@ -51,6 +58,8 @@ const productSlice = createSlice({
   },
 });
 
-const {addProducts, updateProducts, deleteProducts} = productSlice.actions;
+export const {addProducts, updateProducts, deleteProducts, filterProducts} =
+  productSlice.actions;
+
 
 export default productSlice.reducer;
