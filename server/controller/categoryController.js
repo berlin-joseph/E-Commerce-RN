@@ -1,5 +1,6 @@
 const multer = require("multer");
 const Category = require("../models/CategoryModel");
+const { default: mongoose } = require("mongoose");
 
 // Multer middleware setup
 // ...
@@ -118,27 +119,71 @@ exports.getCategoryById = async (req, res) => {
 //update category by id - api/v1/category/:id
 exports.updateCategoryById = async (req, res) => {
   try {
-    const id = req.params.id;
-    const category = await Category.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    if (category.length == 0) {
+    if (!mongoose.isValidObjectId(req.params.id)) {
       return res
-        .status(500)
-        .send({ success: false, message: "Category not updated" });
+        .status(404)
+        .send({ success: false, message: "Invalid category Id" });
     }
-    return res
-      .status(200)
-      .send({ success: true, message: "Category updated", data: category });
+
+    // Multer middleware for handling file upload
+    upload.single("image")(req, res, async (err) => {
+      if (err) {
+        return res.status(400).send({
+          success: false,
+          message: "File upload failed",
+          error: err.message,
+        });
+      }
+
+      const category = await Category.findById(req.params.id);
+      if (!category) {
+        return res
+          .status(404)
+          .send({ success: false, message: "category not found" });
+      }
+
+      const file = req.file;
+      let imagePath;
+      if (file) {
+        const fileName = file.filename;
+        const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+        imagePath = `${basePath}/${fileName}`;
+      } else {
+        imagePath = category.image;
+      }
+
+      const updatedCategory = await Category.findByIdAndUpdate(
+        req.params.id,
+        {
+          name: req.body.name,
+          image: imagePath,
+          color: req.body.color,
+          navigation: req.body.navigation,
+        },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedCategory) {
+        return res
+          .status(404)
+          .send({ success: false, message: "category Not Updated" });
+      }
+
+      return res.status(200).send({
+        success: true,
+        message: "category Updated Successfully",
+        data: updatedCategory,
+      });
+    });
   } catch (error) {
     return res.status(500).send({
       success: false,
-      message: "Category not found",
+      message: "Failed to update category",
       error: error.message,
     });
   }
 };
+
 
 //delete All category - api/v1/category
 exports.deleteCategory = async (req, res) => {

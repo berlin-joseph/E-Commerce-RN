@@ -3,25 +3,30 @@ import axios from 'axios';
 import {baseUrl} from '../constants/url';
 
 const initialState = {
-  isLoggedIn: false,
-  user: null,
-  token: null,
-  loading: false,
+  user: {},
+  status: null,
   error: null,
 };
 
-export const fetchUser = createAsyncThunk(
-  'auth/fetchUser',
-  async ({email, password}, thunkAPI) => {
+export const login = createAsyncThunk(
+  'auth/login',
+  async ({email, password}, {rejectWithValue}) => {
     try {
       const response = await axios.post(`${baseUrl}users/auth/login`, {
         email,
         password,
       });
-
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue('Login failed');
+      }
     }
   },
 );
@@ -36,29 +41,22 @@ const authSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder
-      .addCase(fetchUser.pending, state => {
-        state.status = true;
-        state.user = null;
-        state.error = null;
-      })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = false;
-        state.user = action.payload;
-        state.error = null;
-      })
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.status = false;
-        state.error = action.error.message;
-        if (action.error.message === 'Request failed with status code 401') {
-          state.error = 'Access Denied! Invalid Credentials';
-        }
-        state.error = action.error.message;
-      });
+    builder.addCase(login.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.status = 'success';
+      state.user = action.payload;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.status = 'failed';
+      // console.log(action.payload.message);
+      state.error = action.payload.message;
+    });
   },
 });
 
-export const {signUp, login, logout} = authSlice.actions;
+export const {logout} = authSlice.actions;
+
+export const selectUser = state => state.user.user;
 export default authSlice.reducer;
-export const selectCurrentUser = state => state.auth.user;
-export const selectCurrentToken = state => state.auth.token;

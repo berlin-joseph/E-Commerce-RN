@@ -4,7 +4,7 @@ import {baseUrl} from '../constants/url';
 
 const initialState = {
   category: [],
-  status: 'idle',
+  status: null,
   error: null,
 };
 
@@ -15,7 +15,7 @@ export const fetchCategory = createAsyncThunk(
       const response = await axios.get(`${baseUrl}category`);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching category:', error);
+      console.log('Error fetching category:', error);
       throw error;
     }
   },
@@ -36,7 +36,7 @@ const categorySlice = createSlice({
       })
       .addCase(fetchCategory.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.category = action.payload; // Fix the key here
+        state.category = action.payload;
       })
       .addCase(fetchCategory.rejected, (state, action) => {
         state.status = 'failed';
