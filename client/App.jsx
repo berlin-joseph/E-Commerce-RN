@@ -1,11 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import Navigation from './routes/Navigation';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
 
 const App = () => {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
   );
 };
 

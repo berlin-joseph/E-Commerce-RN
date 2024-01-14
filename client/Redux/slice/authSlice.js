@@ -4,12 +4,12 @@ import {baseUrl} from '../constants/url';
 
 const initialState = {
   user: {},
-  status: null,
-  error: null,
+  loading: false,
+  error: false,
 };
 
-export const login = createAsyncThunk(
-  'auth/login',
+export const fetchUser = createAsyncThunk(
+  'auth/fetchUser',
   async ({email, password}, {rejectWithValue}) => {
     try {
       const response = await axios.post(`${baseUrl}users/auth/login`, {
@@ -18,15 +18,7 @@ export const login = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        return rejectWithValue(error.response.data.message);
-      } else {
-        return rejectWithValue('Login failed');
-      }
+      return rejectWithValue(error.response.data);
     }
   },
 );
@@ -35,28 +27,29 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: state => {
-      state.user = null;
-      state.token = null;
+    logout: (state, action) => {
+      state.user = {};
+      state.loading = false;
+      state.error = false;
     },
   },
   extraReducers: builder => {
-    builder.addCase(login.pending, state => {
-      state.status = 'loading';
+    builder.addCase(fetchUser.pending, state => {
+      state.loading = true;
+      state.error = false;
     });
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.status = 'success';
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      state.loading = false;
       state.user = action.payload;
+      state.error = false;
     });
-    builder.addCase(login.rejected, (state, action) => {
-      state.status = 'failed';
-      // console.log(action.payload.message);
-      state.error = action.payload.message;
+    builder.addCase(fetchUser.rejected, state => {
+      state.loading = false;
+      state.error = true;
     });
   },
 });
 
 export const {logout} = authSlice.actions;
-
-export const selectUser = state => state.user.user;
+export const SelectAllUser = state => state.auth;
 export default authSlice.reducer;
