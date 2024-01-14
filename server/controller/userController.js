@@ -173,6 +173,7 @@ exports.loginUser = async (req, res) => {
             success: true,
             message: "user logged In",
             user: userExist.email,
+            admin: userExist.isAdmin,
             token: token,
           });
         }

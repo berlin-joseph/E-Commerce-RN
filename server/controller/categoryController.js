@@ -43,7 +43,9 @@ exports.createCategory = async (req, res) => {
       }
 
       const imageName = req.file.filename;
-      const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+      const basePath = `${req.protocol}://${req.get(
+        "host"
+      )}/public/uploads/category`;
 
       const category = new Category({
         name: req.body.name,
@@ -146,7 +148,9 @@ exports.updateCategoryById = async (req, res) => {
       let imagePath;
       if (file) {
         const fileName = file.filename;
-        const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+        const basePath = `${req.protocol}://${req.get(
+          "host"
+        )}/public/uploads/category`;
         imagePath = `${basePath}/${fileName}`;
       } else {
         imagePath = category.image;

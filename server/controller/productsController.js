@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
       uploadError = null;
     }
 
-    cb(uploadError, "public/uploads");
+    cb(uploadError, "public/uploads/products");
   },
   filename: function (req, file, cb) {
     const fileName = file.originalname.split(" ").join("-");
@@ -193,7 +193,9 @@ exports.updateProductsById = async (req, res) => {
       let imagePath;
       if (file) {
         const fileName = file.filename;
-        const basePath = `${req.protocol}://${req.get("host")}/public/uploads`;
+        const basePath = `${req.protocol}://${req.get(
+          "host"
+        )}/public/uploads/Products`;
         imagePath = `${basePath}/${fileName}`;
       } else {
         imagePath = product.image;
