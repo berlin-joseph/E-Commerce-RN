@@ -1,7 +1,9 @@
 node_modules/
-server/config/
+
 yarn.lock
 public/
+config/
+
 
 
 
