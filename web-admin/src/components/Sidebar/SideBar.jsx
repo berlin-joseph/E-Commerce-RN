@@ -1,174 +1,86 @@
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import CategoryIcon from "@mui/icons-material/Category";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { SiPhpmyadmin } from "react-icons/si";
+import { MdDashboard } from "react-icons/md";
+import { TbCategory } from "react-icons/tb";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { CiSettings } from "react-icons/ci";
+import { IoIosLogOut } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
-const drawerWidth = 240;
-
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
-export default function SideNavBar() {
-  const navigate = useNavigate();
-  const theme = useTheme();
+const SideBar = () => {
   const [open, setOpen] = React.useState(true);
-
+  const menu = [
+    { title: "Dashboard", icon: <MdDashboard />, path: "/" },
+    {
+      title: "Products",
+      icon: <MdOutlineProductionQuantityLimits />,
+      path: "/products",
+    },
+    { title: "Category", icon: <TbCategory />, path: "/category" },
+  ];
+  const admin = [
+    { title: "Profile", icon: <CgProfile /> },
+    { title: "Settings", icon: <CiSettings /> },
+    { title: "Logout", icon: <IoIosLogOut /> },
+  ];
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={() => setOpen(!open)}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => navigate("/")}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
+    <div
+      className={` bg-dark-purple h-screen  p-5 pt-8 ${
+        open ? "w-72 duration-100" : "w-20 duration-100"
+      } relative`}
+    >
+      <div onClick={() => setOpen(!open)}>
+        <FaArrowLeft
+          className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${
+            !open && "rotate-180"
+          } `}
+        />
+      </div>
+      <div className={" inline-flex"}>
+        <SiPhpmyadmin className={`text-5xl text-white`} />
+        <h1
+          className={`text-white origin-left font-medium text-2xl ${
+            !open && "scale-0"
+          } self-center`}
+        >
+          Admin dashboard
+        </h1>
+      </div>
+      <div>
+        {menu.map((item, index) => (
+          <>
+            <Link key={index} to={item.path} className="no-underline">
+              <li
+                className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
               >
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => navigate("/products")}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+                <span className={`text-2xl`}>{item.icon}</span>
+                <span className={`text-base font-medium ${!open && "hidden"}`}>
+                  {item.title}
+                </span>
+              </li>
+            </Link>
+          </>
+        ))}
+      </div>
+      <div className={`absolute bottom-0 w-64 mb-5`}>
+        {admin.map((item, index) => (
+          <>
+            <li
+              key={index}
+              className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
             >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <ProductionQuantityLimitsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Products" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => navigate("/category")}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <CategoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="Category" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Drawer>
-    </Box>
+              <span className={`text-2xl`}>{item.icon}</span>
+              <span className={`text-base font-medium ${!open && "hidden"}`}>
+                {item.title}
+              </span>
+            </li>
+          </>
+        ))}
+      </div>
+    </div>
   );
-}
+};
+
+export default SideBar;

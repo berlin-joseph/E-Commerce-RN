@@ -3,7 +3,6 @@ const Category = require("../models/CategoryModel");
 const { default: mongoose } = require("mongoose");
 
 // Multer middleware setup
-// ...
 const fileType = {
   "image/png": "png",
   "image/jpg": "jpg",
@@ -19,7 +18,7 @@ const storage = multer.diskStorage({
       uploadError = null;
     }
 
-    cb(uploadError, "public/uploads");
+    cb(uploadError, "public/uploads/category");
   },
   filename: function (req, file, cb) {
     const fileName = file.originalname.split(" ").join("-");
@@ -101,7 +100,7 @@ exports.getCategoryById = async (req, res) => {
   try {
     const id = req.params.id;
     const category = await Category.findById(id);
-    if (category.length == 0) {
+    if (category.length === 0) {
       return res
         .status(500)
         .send({ success: false, message: "Category not available" });
