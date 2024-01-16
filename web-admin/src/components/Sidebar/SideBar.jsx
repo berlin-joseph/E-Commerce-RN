@@ -53,7 +53,7 @@ const SideBar = () => {
       <div>
         {menu.map((item, index) => (
           <>
-            <Link key={index} to={item.path} className="no-underline">
+            <Link key={item.title} to={item.path} className="no-underline">
               <li
                 className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
               >
@@ -70,7 +70,7 @@ const SideBar = () => {
         {admin.map((item, index) => (
           <>
             <li
-              key={index}
+              key={item.title}
               className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
             >
               <span className={`text-2xl`}>{item.icon}</span>

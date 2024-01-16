@@ -1,8 +1,28 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct, selectAllProducts } from "../redux/slice/ProductSlice";
 
 const Products = () => {
+  const [name, setName] = React.useState(null);
+  const [description, setDescription] = React.useState(null);
+  const [category, setCategory] = React.useState(null);
+  const [featured, setFeatured] = React.useState(null);
+  const [brand, setBrand] = React.useState(null);
+  const [price, setPrice] = React.useState(null);
+
+  //redux
+  const dispatch = useDispatch();
+  const products = useSelector(selectAllProducts);
+
+  //
+  const handleAddProducts = (e) => {
+    e.preventDefault();
+    dispatch(
+      addProduct({ name, description, category, featured, brand, price })
+    );
+  };
   return (
     <div className=" container mx-auto h-screen p-10">
       <div className="flex flex-col ">
@@ -13,6 +33,7 @@ const Products = () => {
           <input
             type="text"
             className="border border-dark-purple rounded-md p-2"
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="flex flex-col">
@@ -22,6 +43,7 @@ const Products = () => {
           <input
             type="text"
             className="border border-dark-purple rounded-md p-2"
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <div className="grid grid-cols-2 justify-between gap-10">
@@ -32,6 +54,7 @@ const Products = () => {
             <select
               id="category"
               className="border border-dark-purple rounded-md p-2"
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
@@ -44,6 +67,7 @@ const Products = () => {
             <select
               id="category"
               className="border border-dark-purple rounded-md p-2"
+              onChange={(e) => setFeatured(e.target.value)}
             >
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
@@ -58,6 +82,7 @@ const Products = () => {
             <input
               type="text"
               className="border border-dark-purple rounded-md p-2"
+              onChange={(e) => setBrand(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
@@ -67,10 +92,14 @@ const Products = () => {
             <input
               type="text"
               className="border border-dark-purple rounded-md p-2"
+              onChange={(e) => setPrice(e.target.value)}
             />
           </div>
         </div>
-        <button className=" bg-dark-purple mt-5 py-5 rounded-md text-white">
+        <button
+          className=" bg-dark-purple mt-5 py-5 rounded-md text-white"
+          onClick={handleAddProducts}
+        >
           Add Products
         </button>
       </div>
@@ -98,25 +127,31 @@ const Products = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr className="border-b dark:border-neutral-500">
-                    <td className="whitespace-nowrap px-6 py-4 font-medium">
-                      1
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4">RUby</td>
-                    <td className="whitespace-nowrap px-6 py-4">Berlin</td>
-                    <td className="whitespace-nowrap px-6 py-4">
-                      <div className="flex gap-5">
-                        <button>
-                          <FaEdit className="text-2xl text-blue-900" />
-                        </button>
-                        <button>
-                          <FaTrash className="text-2xl text-red-900" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                {products.map((data) => (
+                  <tbody>
+                    <tr className="border-b dark:border-neutral-500">
+                      <td className="whitespace-nowrap px-6 py-4 font-medium">
+                        1
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {data.name}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {data.description}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        <div className="flex gap-5">
+                          <button>
+                            <FaEdit className="text-2xl text-blue-900" />
+                          </button>
+                          <button>
+                            <FaTrash className="text-2xl text-red-900" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
               </table>
             </div>
           </div>
