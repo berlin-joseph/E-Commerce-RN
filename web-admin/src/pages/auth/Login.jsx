@@ -12,22 +12,24 @@ const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector(selectAuth);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log("fucking tokens", token);
-    if (token) {
-      history("/dashboard");
-    }
-  }, [history]);
+ useEffect(() => {
+   const token = localStorage.getItem("token");
+   console.log("fucking tokens", token);
+   if (token) {
+     history("/dashboard");
+     window.location.reload();
+   }
+ }, [token]);
 
-  const handleLogin = () => {
-    dispatch(fetchUser({ email, password }));
-    if (auth.user.admin === true && auth.user.success === true) {
-      const token = auth.user.token;
-      localStorage.setItem("token", token);
-      history("/dashboard");
-    }
-  };
+ const handleLogin = () => {
+   dispatch(fetchUser({ email, password }));
+   if (auth.user.admin === true && auth.user.success === true) {
+     const token = auth.user.token;
+     localStorage.setItem("token", token);
+     history("/dashboard");
+     window.location.reload();
+   }
+ };
 
   return (
     <div className="bg-dark-purple h-screen">

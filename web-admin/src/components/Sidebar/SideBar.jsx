@@ -7,12 +7,19 @@ import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideBar = () => {
   const [open, setOpen] = React.useState(true);
+  const history = useNavigate();
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    history("/");
+    window.location.reload();
+  };
   const menu = [
-    { title: "Dashboard", icon: <MdDashboard />, path: "/" },
+    { title: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
     {
       title: "Products",
       icon: <MdOutlineProductionQuantityLimits />,
@@ -23,7 +30,7 @@ const SideBar = () => {
   const admin = [
     { title: "Profile", icon: <CgProfile /> },
     { title: "Settings", icon: <CiSettings /> },
-    { title: "Logout", icon: <IoIosLogOut /> },
+    { title: "Logout", icon: <IoIosLogOut />, link: handleLogOut },
   ];
   return (
     <div
@@ -39,7 +46,7 @@ const SideBar = () => {
         />
       </div>
       <div>
-        <Link to={"/"} className={" inline-flex"}>
+        <Link to={"/dashboard"} className={" inline-flex"}>
           <SiPhpmyadmin className={`text-5xl text-white`} />
           <h1
             className={`text-white origin-left font-medium text-2xl ${
@@ -68,7 +75,7 @@ const SideBar = () => {
       {/* </div> */}
       <div className={`absolute bottom-0 w-64 pb-5`}>
         {admin.map((item, index) => (
-          <>
+          <div onClick={item.link}>
             <li
               key={index}
               className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
@@ -78,7 +85,7 @@ const SideBar = () => {
                 {item.title}
               </span>
             </li>
-          </>
+          </div>
         ))}
       </div>
     </div>
