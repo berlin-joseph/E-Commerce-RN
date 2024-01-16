@@ -29,7 +29,10 @@ const Products = () => {
             <label htmlFor="" className="mt-5 mb-2 ">
               Category
             </label>
-            <select id="category" className="border border-dark-purple py-10">
+            <select
+              id="category"
+              className="border border-dark-purple rounded-md p-2"
+            >
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
             </select>
@@ -38,7 +41,10 @@ const Products = () => {
             <label htmlFor="" className="mt-5 mb-2">
               Featured
             </label>
-            <select id="category" className="border border-dark-purple py-10">
+            <select
+              id="category"
+              className="border border-dark-purple rounded-md p-2"
+            >
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
             </select>
