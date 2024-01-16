@@ -50,27 +50,27 @@ const SideBar = () => {
           </h1>
         </Link>
       </div>
-      <div>
-        {menu.map((item, index) => (
-          <>
-            <Link key={item.title} to={item.path} className="no-underline">
-              <li
-                className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
-              >
-                <span className={`text-2xl`}>{item.icon}</span>
-                <span className={`text-base font-medium ${!open && "hidden"}`}>
-                  {item.title}
-                </span>
-              </li>
-            </Link>
-          </>
-        ))}
-      </div>
+      {/* <div> */}
+      {menu.map((item, index) => (
+        <>
+          <Link key={index} to={item.path} className="no-underline">
+            <li
+              className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
+            >
+              <span className={`text-2xl`}>{item.icon}</span>
+              <span className={`text-base font-medium ${!open && "hidden"}`}>
+                {item.title}
+              </span>
+            </li>
+          </Link>
+        </>
+      ))}
+      {/* </div> */}
       <div className={`absolute bottom-0 w-64 pb-5`}>
         {admin.map((item, index) => (
           <>
             <li
-              key={item.title}
+              key={index}
               className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
             >
               <span className={`text-2xl`}>{item.icon}</span>
