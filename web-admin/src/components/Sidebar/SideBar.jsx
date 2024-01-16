@@ -38,15 +38,17 @@ const SideBar = () => {
           } `}
         />
       </div>
-      <div className={" inline-flex"}>
-        <SiPhpmyadmin className={`text-5xl text-white`} />
-        <h1
-          className={`text-white origin-left font-medium text-2xl ${
-            !open && "scale-0"
-          } self-center`}
-        >
-          Admin dashboard
-        </h1>
+      <div>
+        <Link to={"/"} className={" inline-flex"}>
+          <SiPhpmyadmin className={`text-5xl text-white`} />
+          <h1
+            className={`text-white origin-left font-medium text-2xl ${
+              !open && "scale-0"
+            } self-center`}
+          >
+            Admin dashboard
+          </h1>
+        </Link>
       </div>
       <div>
         {menu.map((item, index) => (
@@ -64,7 +66,7 @@ const SideBar = () => {
           </>
         ))}
       </div>
-      <div className={`absolute bottom-0 w-64 mb-5`}>
+      <div className={`absolute bottom-0 w-64 pb-5`}>
         {admin.map((item, index) => (
           <>
             <li
