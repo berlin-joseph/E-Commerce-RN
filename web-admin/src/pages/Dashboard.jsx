@@ -41,7 +41,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className=" border-gray-300 border-b-2	 " />
+      <div className=" border-gray-300 border-b-2	" />
       {/* charts */}
       <div className=" w-1/2 h-1/2"></div>
     </div>
