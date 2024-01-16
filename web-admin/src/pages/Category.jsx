@@ -15,12 +15,9 @@ const Products = () => {
             className="border border-dark-purple rounded-md p-2"
           />
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="" className="mt-5  mb-2">
-            Image
-          </label>
+        <div className="flex flex-col mt-5">
           <input
-            type="image"
+            type="file"
             className="border border-dark-purple rounded-md p-2"
           />
         </div>
