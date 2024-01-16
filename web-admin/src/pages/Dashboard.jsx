@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoProject } from "react-icons/go";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoPeopleOutline } from "react-icons/io5";

@@ -10,12 +10,12 @@ import {
 } from "../redux/slice/ProductSlice";
 
 const Products = () => {
-  const [name, setName] = React.useState(null);
-  const [description, setDescription] = React.useState(null);
-  const [category, setCategory] = React.useState(null);
-  const [featured, setFeatured] = React.useState(null);
-  const [brand, setBrand] = React.useState(null);
-  const [price, setPrice] = React.useState(null);
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [category, setCategory] = React.useState("");
+  const [featured, setFeatured] = React.useState("");
+  const [brand, setBrand] = React.useState("");
+  const [price, setPrice] = React.useState("");
 
   const [showModal, setShowModal] = React.useState(false);
 
@@ -30,8 +30,8 @@ const Products = () => {
     );
     setName("");
     setDescription("");
-    setCategory(null);
-    setFeatured(null);
+    setCategory("");
+    setFeatured("");
     setBrand("");
     setPrice("");
   };
@@ -94,8 +94,8 @@ const Products = () => {
               value={featured}
               onChange={(e) => setFeatured(e.target.value)}
             >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
+              <option value="True">Yes</option>
+              <option value="False">No</option>
             </select>
           </div>
         </div>
