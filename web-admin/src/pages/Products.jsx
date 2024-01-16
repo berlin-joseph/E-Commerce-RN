@@ -97,8 +97,8 @@ const Products = () => {
                     <td className="whitespace-nowrap px-6 py-4 font-medium">
                       1
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">Mark</td>
-                    <td className="whitespace-nowrap px-6 py-4">Otto</td>
+                    <td className="whitespace-nowrap px-6 py-4">RUby</td>
+                    <td className="whitespace-nowrap px-6 py-4">Berlin</td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex gap-5">
                         <button>
