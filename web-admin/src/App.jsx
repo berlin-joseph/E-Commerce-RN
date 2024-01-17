@@ -20,7 +20,9 @@ const App = () => {
           </Routes>
         </div>
       ) : (
-        <Login />
+        <Routes>
+          <Route index element={<Login />} />
+        </Routes>
       )}
     </BrowserRouter>
   );
