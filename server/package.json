@@ -6,7 +6,8 @@
   "author": "Berlin Joe L",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build": "yarn"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
