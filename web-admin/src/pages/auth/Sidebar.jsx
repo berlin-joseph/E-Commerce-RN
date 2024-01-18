@@ -19,15 +19,15 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("login")}
       >
         <div
-          className={`w-full p-5 lg:w-40 ${
+          className={` w-32 h-28 p-5 lg:w-40 ${
             selected === "login" ? "bg-green-500" : "bg-white"
-          } text-center py-4`}
+          } text-center py-4 flex flex-col justify-center items-center`}
         >
           <FaUserCircle
             className={`${
               selected === "login"
-                ? "text-white mx-auto text-xl"
-                : "text-black mx-auto text-xl"
+                ? "text-white mx-auto text-2xl"
+                : "text-black mx-auto text-2xl"
             }`}
           />
           <h1
@@ -43,15 +43,15 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("register")}
       >
         <div
-          className={`w-full p-5 lg:w-40 ${
+          className={` w-32 h-28 p-5 lg:w-40 ${
             selected === "register" ? "bg-green-500" : "bg-white"
-          } text-center py-4`}
+          } text-center py-4 flex flex-col justify-center items-center`}
         >
           <BiEdit
             className={`${
               selected === "register"
-                ? "text-white mx-auto text-xl"
-                : "text-black mx-auto text-xl"
+                ? "text-white mx-auto text-2xl"
+                : "text-black mx-auto text-2xl"
             }`}
           />
           <h1
@@ -69,15 +69,15 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("forgotPassword")}
       >
         <div
-          className={`w-full p-5 lg:w-40 ${
+          className={` w-32 h-28 p-5 lg:w-40 ${
             selected === "forgotPassword" ? "bg-green-500" : "bg-white"
-          } text-center py-4`}
+          } text-center py-4 flex flex-col justify-center items-center`}
         >
           <FaLock
             className={`${
               selected === "forgotPassword"
-                ? "text-white mx-auto text-xl"
-                : "text-black mx-auto text-xl"
+                ? "text-white mx-auto text-2xl"
+                : "text-black mx-auto text-2xl"
             }`}
           />
           <h1
@@ -85,7 +85,7 @@ const Sidebar = () => {
               selected === "forgotPassword" ? "text-white" : "text-black"
             }`}
           >
-            Forgot
+            Forgot Password ?
           </h1>
         </div>
       </Link>
