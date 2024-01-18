@@ -23,7 +23,7 @@ const Login = () => {
     if (auth.user.admin === true && auth.user.success === true) {
       const token = auth.user.token;
       localStorage.setItem("token", token);
-      history("/dashboard");
+      history("/dashboard"); 
       window.location.reload();
     }
   }, [auth.user, history]);
