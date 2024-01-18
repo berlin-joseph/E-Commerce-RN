@@ -46,7 +46,7 @@ const SideBar = () => {
         />
       </div>
       <div>
-        <Link to={"/dashboard"} className={" inline-flex"}>
+        <Link to={"/"} className={" inline-flex"}>
           <SiPhpmyadmin className={`text-5xl text-white`} />
           <h1
             className={`text-white origin-left font-medium text-2xl ${

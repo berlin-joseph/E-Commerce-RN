@@ -13,15 +13,14 @@ const App = () => {
         <div className="flex">
           <SideBar />
           <Routes>
+            <Route index path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
             <Route path="/category" element={<Category />} />
           </Routes>
         </div>
       ) : (
-        <Routes>
-          <Route index element={<Login />} />
-        </Routes>
+        <Login />
       )}
     </BrowserRouter>
   );

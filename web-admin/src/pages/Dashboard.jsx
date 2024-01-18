@@ -21,6 +21,7 @@ const colors = [
   "bg-yellow-600",
 ];
 
+
 const Dashboard = () => {
   return (
     <div className=" container mx-auto">

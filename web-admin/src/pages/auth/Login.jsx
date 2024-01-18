@@ -24,7 +24,7 @@ const Login = () => {
       const token = auth.user.token;
       localStorage.setItem("token", token);
       history("/dashboard");
-      // window.location.reload();
+      window.location.reload();
     }
   }, [auth.user, history]);
 
