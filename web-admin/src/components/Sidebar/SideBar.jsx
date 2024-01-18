@@ -40,7 +40,7 @@ const SideBar = () => {
         } relative`}
       >
         <div onClick={() => setOpen(!open)}>
-          <div className=" hidden md:block">
+          <div className=" hidden lg:block">
             <FaArrowLeft
               className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${
                 !open && "rotate-180"
