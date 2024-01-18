@@ -5,6 +5,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import Login from "./pages/auth/Login";
 import Category from "./pages/admin/Category";
+import Index from "./pages/auth/Index";
 
 const NotFound = () => {
   return (
@@ -30,7 +31,7 @@ const App = () => {
           </Routes>
         </div>
       ) : (
-        <Login />
+        <Index />
       )}
     </BrowserRouter>
   );

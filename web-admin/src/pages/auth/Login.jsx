@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, selectAuth } from "../../redux/slice/authSlice";
 import { useNavigate } from "react-router-dom";
+import { MdEmail } from "react-icons/md";
+import { MdVpnKey } from "react-icons/md";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -23,7 +25,7 @@ const Login = () => {
     if (auth.user.admin === true && auth.user.success === true) {
       const token = auth.user.token;
       localStorage.setItem("token", token);
-      history("/dashboard"); 
+      history("/dashboard");
       window.location.reload();
     }
   }, [auth.user, history]);
@@ -35,40 +37,45 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-dark-purple h-screen">
-      <div className=" flex flex-col w-1/2 container mx-auto">
-        <label htmlFor="" className="mt-5 mb-2 text-white">
-          Name
-        </label>
-        <input
-          type="text"
-          className="border border-dark-purple rounded-md p-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <div className=" bg-white p-5 w-3/12 ">
+      <div>
+        <h1 className=" text-2xl font-bold text-center pb-3">LOGIN ACCOUNT</h1>
       </div>
-      <div className="flex flex-col w-1/2 container mx-auto">
-        <label htmlFor="" className="mt-5 text-white mb-2">
-          Description
-        </label>
-        <input
-          type="text"
-          className="border border-dark-purple rounded-md p-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <div className=" mb-3">
+        <label htmlFor="">Email</label>
+        <div className=" flex border border-dark-purple rounded-s bg-gray-100 text-gray-500 ">
+          <MdEmail className=" self-center text-2xl mx-2" />
+          <input
+            type="text"
+            value={email}
+            className="bg-gray-100  border-0 w-full p-2"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="mt-10 w-1/2 container mx-auto">
-        <button
-          className="text-dark-purple bg-white px-5 py-3 rounded-md"
+      <div className=" mb-3">
+        <label htmlFor="">Password</label>
+        <div className=" flex border border-dark-purple rounded-s bg-gray-100 text-gray-500">
+          <MdVpnKey className=" self-center text-2xl mx-2" />
+          <input
+            type="text"
+            value={password}
+            className="bg-gray-100  border-0 w-full p-2"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      </div>
+      <div>
+        <h1
+          className="bg-green-600 rounded-s text-lg text-white text-center cursor-pointer"
           onClick={handleLogin}
         >
           Login
-        </button>
+        </h1>
       </div>
-      {auth.error && (
-        <p className=" text-white">Error occurred while logging in.</p>
-      )}
+      <div className=" cursor-pointer">
+        <h1 className=" text-gray-400 text-center pt-3">Forgot Password</h1>
+      </div>
     </div>
   );
 };
