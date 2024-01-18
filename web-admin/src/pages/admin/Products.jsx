@@ -80,7 +80,7 @@ const Products = () => {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="option1">Option 1</option>
+              <option value="option1">Option </option>
               <option value="option2">Option 2</option>
             </select>
           </div>
