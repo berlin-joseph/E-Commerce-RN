@@ -1,6 +1,6 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
-import { FaTrash } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProduct,
@@ -37,7 +37,7 @@ const Products = () => {
   };
   const updateProducts = (selectedProduct) => {
     setShowModal(true);
-    // console.log(selectedProduct);
+    console.log(selectedProduct);
     dispatch(setSelectedProduct(selectedProduct));
   };
   const handleDeleteProduct = (id) => {
