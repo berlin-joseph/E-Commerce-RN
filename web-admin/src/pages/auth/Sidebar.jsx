@@ -19,7 +19,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("login")}
       >
         <div
-          className={` w-24 lg:w-40 ${
+          className={`w-24 lg:w-40 ${
             selected === "login" ? "bg-green-500" : "bg-white"
           } text-center py-4`}
         >
@@ -31,9 +31,7 @@ const Sidebar = () => {
             }`}
           />
           <h1
-            className={`${
-              selected === "login" ? "text-white text-xl" : "text-black text-xl"
-            }`}
+            className={`${selected === "login" ? "text-white" : "text-black"}`}
           >
             Login
           </h1>
@@ -71,7 +69,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("forgotPassword")}
       >
         <div
-          className={` w-24 lg:w-40 ${
+          className={`w-24 lg:w-40 ${
             selected === "forgotPassword" ? "bg-green-500" : "bg-white"
           } text-center py-4`}
         >
