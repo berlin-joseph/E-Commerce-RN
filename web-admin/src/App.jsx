@@ -9,19 +9,19 @@ import Login from "./pages/auth/Login";
 const App = () => {
   return (
     <BrowserRouter>
-      {localStorage.getItem("token") ? (
-        <div className="flex">
-          <SideBar />
-          <Routes>
-            <Route index path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/category" element={<Category />} />
-          </Routes>
-        </div>
-      ) : (
+      {/* {localStorage.getItem("token") ? ( */}
+      <div className="flex">
+        <SideBar />
+        <Routes>
+          <Route index path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/category" element={<Category />} />
+        </Routes>
+      </div>
+      {/* ) : (
         <Login />
-      )}
+      )} */}
     </BrowserRouter>
   );
 };
