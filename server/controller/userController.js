@@ -19,7 +19,7 @@ const sendVerificationEmail = async (user, verificationToken) => {
       from: "E-Shoppy.com",
       to: user.email,
       subject: "Verification Email",
-      text: `Please click the verification link to verify your email: http://localhost:3000/api/v1/verify/${verificationToken}`,
+      text: `Please click the verification link to verify your email: https://e-commerce-rn.onrender.com/api/v1/verify/${verificationToken}`,
     };
 
     // Send mail

@@ -42,25 +42,25 @@ const Login = () => {
         <h1 className=" text-2xl font-bold text-center pb-3">LOGIN ACCOUNT</h1>
       </div>
       <div className=" mb-3">
-        <label htmlFor="">Email</label>
-        <div className=" flex border border-dark-purple rounded-s bg-gray-100 text-gray-500 ">
+        <div className=" flex border rounded-s bg-gray-100 text-gray-500 ">
           <MdEmail className=" self-center text-2xl mx-2" />
           <input
             type="text"
             value={email}
-            className="bg-gray-100  border-0 w-full p-2"
+            placeholder="email"
+            className="bg-gray-100 w-full p-2 outline-none"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
       </div>
       <div className=" mb-3">
-        <label htmlFor="">Password</label>
-        <div className=" flex border border-dark-purple rounded-s bg-gray-100 text-gray-500">
+        <div className=" flex border rounded-s bg-gray-100 text-gray-500">
           <MdVpnKey className=" self-center text-2xl mx-2" />
           <input
             type="text"
             value={password}
-            className="bg-gray-100  border-0 w-full p-2"
+            placeholder="password"
+            className="bg-gray-100 w-full p-2 outline-none"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -74,7 +74,7 @@ const Login = () => {
         </h1>
       </div>
       <div className=" cursor-pointer">
-        <h1 className=" text-gray-400 text-center pt-3">Forgot Password</h1>
+        <h1 className=" text-gray-400 text-center pt-5">Forgot Password</h1>
       </div>
     </div>
   );
