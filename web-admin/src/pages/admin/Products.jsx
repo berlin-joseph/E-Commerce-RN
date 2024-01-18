@@ -7,7 +7,7 @@ import {
   deleteProduct,
   selectAllProducts,
   setSelectedProduct,
-} from "../redux/slice/ProductSlice";
+} from "../../redux/slice/ProductSlice";
 
 const Products = () => {
   const [name, setName] = React.useState("");

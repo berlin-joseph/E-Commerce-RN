@@ -2,7 +2,7 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
 
-const Products = () => {
+const Category = () => {
   return (
     <div className=" container mx-auto h-screen p-10">
       <div className="flex flex-col ">
@@ -77,4 +77,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Category;
