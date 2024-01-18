@@ -69,7 +69,7 @@ const Products = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <div className="grid grid-cols-2 justify-between gap-10">
+        <div className="grid md:grid-cols-2 md:justify-between md:gap-5">
           <div className="flex flex-col">
             <label htmlFor="" className="mt-5 mb-2 ">
               Category
@@ -99,7 +99,7 @@ const Products = () => {
             </select>
           </div>
         </div>
-        <div className="grid grid-cols-2 justify-between gap-10">
+        <div className="grid md:grid-cols-2 md:justify-between md:gap-5">
           <div className="flex flex-col">
             <label htmlFor="" className="mt-5  mb-2">
               Brand

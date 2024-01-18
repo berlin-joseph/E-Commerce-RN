@@ -10,7 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 
 const SideBar = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const history = useNavigate();
 
   const handleLogOut = () => {
@@ -33,60 +33,64 @@ const SideBar = () => {
     { title: "Logout", icon: <IoIosLogOut />, link: handleLogOut },
   ];
   return (
-    <div
-      className={` bg-dark-purple h-screen  p-5 pt-8 ${
-        open ? "w-72 duration-100" : "w-20 duration-100"
-      } relative`}
-    >
-      <div onClick={() => setOpen(!open)}>
-        <FaArrowLeft
-          className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${
-            !open && "rotate-180"
-          } `}
-        />
-      </div>
-      <div>
-        <Link to={"/"} className={" inline-flex"}>
-          <SiPhpmyadmin className={`text-5xl text-white`} />
-          <h1
-            className={`text-white origin-left font-medium text-2xl ${
-              !open && "scale-0"
-            } self-center`}
-          >
-            Admin dashboard
-          </h1>
-        </Link>
-      </div>
-      {/* <div> */}
-      {menu.map((item, index) => (
-        <>
-          <Link key={index} to={item.path} className="no-underline">
-            <li
-              className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
-            >
-              <span className={`text-2xl`}>{item.icon}</span>
-              <span className={`text-base font-medium ${!open && "hidden"}`}>
-                {item.title}
-              </span>
-            </li>
-          </Link>
-        </>
-      ))}
-      {/* </div> */}
-      <div className={`absolute bottom-0 w-64 pb-5`}>
-        {admin.map((item, index) => (
-          <div onClick={item.link}>
-            <li
-              key={index}
-              className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
-            >
-              <span className={`text-2xl`}>{item.icon}</span>
-              <span className={`text-base font-medium ${!open && "hidden"}`}>
-                {item.title}
-              </span>
-            </li>
+    <div className="">
+      <div
+        className={` bg-dark-purple h-screen p-5 pt-8 ${
+          open ? "md:w-72 duration-100" : "w-20 duration-100"
+        } relative`}
+      >
+        <div onClick={() => setOpen(!open)}>
+          <div className=" hidden md:block">
+            <FaArrowLeft
+              className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${
+                !open && "rotate-180"
+              } `}
+            />
           </div>
+        </div>
+        <div>
+          <Link to={"/"} className={" inline-flex"}>
+            <SiPhpmyadmin className={`text-5xl text-white`} />
+            <h1
+              className={`text-white origin-left font-medium text-2xl ${
+                !open && "scale-0"
+              } self-center`}
+            >
+              Admin dashboard
+            </h1>
+          </Link>
+        </div>
+        {/* <div> */}
+        {menu.map((item, index) => (
+          <>
+            <Link key={index} to={item.path} className="no-underline">
+              <li
+                className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
+              >
+                <span className={`text-2xl`}>{item.icon}</span>
+                <span className={`text-base font-medium ${!open && "hidden"}`}>
+                  {item.title}
+                </span>
+              </li>
+            </Link>
+          </>
         ))}
+        {/* </div> */}
+
+        <div className="absolute bottom-0 bg-dark-purple mb-5">
+          {admin.map((item, index) => (
+            <div onClick={item.link} key={index}>
+              <li
+                className={`flex items-center gap-x-2 text-gray-300 text-sm cursor-pointer p-2 hover:bg-light-white rounded-md mt-2`}
+              >
+                <span className={`text-2xl`}>{item.icon}</span>
+                <span className={`text-base font-medium ${!open && "hidden"}`}>
+                  {item.title}
+                </span>
+              </li>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

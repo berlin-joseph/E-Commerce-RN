@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom"; 
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
 import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
@@ -22,13 +22,15 @@ const App = () => {
       {localStorage.getItem("token") ? (
         <div className="flex">
           <SideBar />
-          <Routes>
-            <Route index path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/category" element={<Category />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="overflow-x-hidden flex-1">
+            <Routes>
+              <Route index path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/category" element={<Category />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </div>
       ) : (
         <Index />

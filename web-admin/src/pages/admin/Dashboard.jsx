@@ -24,16 +24,16 @@ const colors = [
 
 const Dashboard = () => {
   return (
-    <div className=" container mx-auto">
+    <div className="container mx-auto">
       {/* card */}
-      <div className="grid grid-cols-5 gap-5 m-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5 m-10">
         {card.map((item, index) => (
           <div key={index} className={` ${colors[index]} px-5 py-3 rounded-md`}>
             <div className={`flex items-center justify-between`}>
-              <h1 className=" text-white text-2xl font-semibold">
+              <h1 className=" text-white text-md md:text-lg font-semibold">
                 {item.title}
               </h1>
-              <span className={`text-white text-2xl font-medium`}>
+              <span className={`text-white md:text-xl text-2xl font-medium`}>
                 {item.icon}
               </span>
             </div>
