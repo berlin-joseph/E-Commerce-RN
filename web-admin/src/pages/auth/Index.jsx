@@ -15,7 +15,7 @@ const Index = () => {
         backgroundPosition: "center",
         height: "100vh",
       }}
-      className=" flex w-full justify-center items-center gap-5 fixed top-0 bottom-0 left-0 right-0"
+      className=" flex flex-col lg:flex-row justify-center items-center gap-5 fixed top-0 bottom-0 left-0 right-0"
     >
       <Sidebar />
       <Routes>

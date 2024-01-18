@@ -12,14 +12,14 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex justify-center lg:flex-col">
       <Link
         to={"/login"}
         className="flex items-center"
         onClick={() => handleLinkClick("login")}
       >
         <div
-          className={`w-40 ${
+          className={` w-24 lg:w-40 ${
             selected === "login" ? "bg-green-500" : "bg-white"
           } text-center py-4`}
         >
@@ -45,7 +45,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("register")}
       >
         <div
-          className={`w-40 ${
+          className={`w-24 lg:w-40 ${
             selected === "register" ? "bg-green-500" : "bg-white"
           } text-center py-4`}
         >
@@ -71,7 +71,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("forgotPassword")}
       >
         <div
-          className={`w-40 ${
+          className={` w-24 lg:w-40 ${
             selected === "forgotPassword" ? "bg-green-500" : "bg-white"
           } text-center py-4`}
         >
@@ -87,7 +87,7 @@ const Sidebar = () => {
               selected === "forgotPassword" ? "text-white" : "text-black"
             }`}
           >
-            Forgot Password
+            Forgot
           </h1>
         </div>
       </Link>
