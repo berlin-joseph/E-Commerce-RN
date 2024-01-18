@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
 import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
+import Login from "./pages/auth/Login";
 import Category from "./pages/admin/Category";
 
 const NotFound = () => {
