@@ -6,6 +6,15 @@ import Products from "./pages/Products";
 import Category from "./pages/Category";
 import Login from "./pages/auth/Login";
 
+const NotFound = () => {
+  return (
+    <div>
+      <h1>404 - Not Found</h1>
+      <p>Sorry, the page you are looking for does not exist.</p>
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -17,6 +26,7 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
             <Route path="/category" element={<Category />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       ) : (
