@@ -9,6 +9,8 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const history = useNavigate();
+  const [isEmailValid, setIsEmailValid] = React.useState(true);
+  const [error, setError] = React.useState(null);
 
   //redux
   const dispatch = useDispatch();
@@ -32,6 +34,24 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    // Basic email validation
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    const isValidEmail = emailRegex.test(email);
+
+    if (!email || !password || !name) {
+      setIsEmailValid(false);
+      return setError("Enter Your Details");
+    }
+
+    if (!isValidEmail) {
+      setIsEmailValid(false);
+      return setError("Enter Valid Email");
+    }
+
+    setError(null);
+
+    setIsEmailValid(true);
 
     dispatch(fetchUser({ email, password }));
   };
@@ -73,6 +93,9 @@ const Login = () => {
           Login
         </h1>
       </div>
+      {!isEmailValid ? (
+        <h1 className=" text-center pt-3 text-red-500">{error}</h1>
+      ) : null}
       <Link to={"/forgot-password"}>
         <div className=" cursor-pointer">
           <h1 className=" text-gray-400 text-center pt-5">Forgot Password</h1>

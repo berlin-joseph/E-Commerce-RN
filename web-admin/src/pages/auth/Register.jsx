@@ -6,6 +6,30 @@ const Register = () => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isEmailValid, setIsEmailValid] = React.useState(true);
+  const [error, setError] = React.useState(null);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    // Basic email validation
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    const isValidEmail = emailRegex.test(email);
+
+    if (!email || !password || !name) {
+      setIsEmailValid(false);
+      return setError("Enter Your Details");
+    }
+
+    if (!isValidEmail) {
+      setIsEmailValid(false);
+      return setError("Enter Valid Email");
+    }
+
+    setError(null);
+
+    setIsEmailValid(true);
+  };
 
   return (
     <div className=" bg-white w-96 p-5 md:w-3/4 lg:w-1/3">
@@ -51,10 +75,16 @@ const Register = () => {
         </div>
       </div>
       <div>
-        <h1 className="bg-green-600 rounded-s text-lg text-white text-center cursor-pointer">
+        <h1
+          className="bg-green-600 rounded-s text-lg text-white text-center cursor-pointer"
+          onClick={handleRegister}
+        >
           Register
         </h1>
       </div>
+      {!isEmailValid ? (
+        <h1 className=" text-center pt-3 text-red-500">{error}</h1>
+      ) : null}
     </div>
   );
 };
