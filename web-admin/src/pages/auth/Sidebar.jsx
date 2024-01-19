@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
   const [selected, setSelected] = useState("login");
+
+  useEffect(() => {
+    const routeName = location.pathname.split("/")[1];
+    setSelected(routeName || "login");
+  }, [location.pathname]);
 
   const handleLinkClick = (link) => {
     setSelected(link);
@@ -66,23 +72,23 @@ const Sidebar = () => {
       <Link
         to={"/forgot-password"}
         className="flex items-center"
-        onClick={() => handleLinkClick("forgotPassword")}
+        onClick={() => handleLinkClick("forgot-password")}
       >
         <div
           className={` w-32 h-28 p-5 lg:w-40 ${
-            selected === "forgotPassword" ? "bg-green-500" : "bg-white"
+            selected === "forgot-password" ? "bg-green-500" : "bg-white"
           } text-center py-4 flex flex-col justify-center items-center`}
         >
           <FaLock
             className={`${
-              selected === "forgotPassword"
+              selected === "forgot-password"
                 ? "text-white mx-auto text-2xl"
                 : "text-black mx-auto text-2xl"
             }`}
           />
           <h1
             className={`${
-              selected === "forgotPassword" ? "text-white" : "text-black"
+              selected === "forgot-password" ? "text-white" : "text-black"
             }`}
           >
             Forgot Password ?

@@ -4,6 +4,7 @@ import backgroundImage from "../../assets/cyber-monday-shopping-sales.jpg";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
+import ForgotPassword from "./ForgotPassword";
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
         <Route index path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </div>
   );

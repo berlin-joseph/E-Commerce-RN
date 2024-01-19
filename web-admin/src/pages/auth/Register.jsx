@@ -10,7 +10,9 @@ const Register = () => {
   return (
     <div className=" bg-white w-96 p-5 md:w-3/4 lg:w-1/3">
       <div>
-        <h1 className=" text-2xl font-bold text-center pb-3">LOGIN ACCOUNT</h1>
+        <h1 className=" text-xl font-semibold text-center pb-3">
+          Register Here
+        </h1>
       </div>
       <div className=" mb-3">
         <div className=" flex border rounded-s bg-gray-100 text-gray-500 ">
