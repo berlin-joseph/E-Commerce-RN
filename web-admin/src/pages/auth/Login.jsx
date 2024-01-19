@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className=" bg-white w-96 p-5 md:w-3/4 lg:w-1/3">
+    <div className=" bg-white w-96 p-5 h-80 md:w-3/4 lg:w-1/3 lg:h-72 flex flex-col justify-center">
       <div>
         <h1 className=" text-xl font-semibold text-center pb-3">Login Here</h1>
       </div>
@@ -93,14 +93,16 @@ const Login = () => {
           Login
         </h1>
       </div>
-      {!isEmailValid ? (
-        <h1 className=" text-center pt-3 text-red-500">{error}</h1>
-      ) : null}
+
       <Link to={"/forgot-password"}>
         <div className=" cursor-pointer">
           <h1 className=" text-gray-400 text-center pt-5">Forgot Password</h1>
         </div>
       </Link>
+
+      {!isEmailValid ? (
+        <h1 className=" text-center pt-3 text-red-500">{error}</h1>
+      ) : null}
     </div>
   );
 };

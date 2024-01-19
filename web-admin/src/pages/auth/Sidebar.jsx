@@ -25,7 +25,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("login")}
       >
         <div
-          className={` w-32 h-28 p-5 lg:w-40 ${
+          className={` w-32 h-24 p-5 lg:w-40 ${
             selected === "login" ? "bg-green-500" : "bg-white"
           } text-center py-4 flex flex-col justify-center items-center`}
         >
@@ -49,7 +49,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("register")}
       >
         <div
-          className={` w-32 h-28 p-5 lg:w-40 ${
+          className={` w-32 h-24 p-5 lg:w-40 ${
             selected === "register" ? "bg-green-500" : "bg-white"
           } text-center py-4 flex flex-col justify-center items-center`}
         >
@@ -75,7 +75,7 @@ const Sidebar = () => {
         onClick={() => handleLinkClick("forgot-password")}
       >
         <div
-          className={` w-32 h-28 p-5 lg:w-40 ${
+          className={` w-32 h-24 p-5 lg:w-40 ${
             selected === "forgot-password" ? "bg-green-500" : "bg-white"
           } text-center py-4 flex flex-col justify-center items-center`}
         >
