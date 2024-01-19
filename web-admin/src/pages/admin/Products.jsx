@@ -8,6 +8,7 @@ import {
   selectAllProducts,
   setSelectedProduct,
 } from "../../redux/slice/ProductSlice";
+import { selectAllCategory } from "../../redux/slice/CategorySlice";
 
 const Products = () => {
   const [name, setName] = React.useState("");
@@ -22,6 +23,8 @@ const Products = () => {
   //redux
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
+  const categories = useSelector(selectAllCategory);
+  console.log(categories);
 
   //
   const handleAddProducts = (e) => {
@@ -80,8 +83,9 @@ const Products = () => {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="option1">Option </option>
-              <option value="option2">Option 2</option>
+              {categories.map((category, index) => (
+                <option key={index}>{category.name}</option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col">
@@ -89,7 +93,7 @@ const Products = () => {
               Featured
             </label>
             <select
-              id="category"
+              id="featured"
               className="border border-dark-purple rounded-md p-2"
               value={featured}
               onChange={(e) => setFeatured(e.target.value)}

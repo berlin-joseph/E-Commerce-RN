@@ -39,7 +39,7 @@ const Login = () => {
     const emailRegex = /^\S+@\S+\.\S+$/;
     const isValidEmail = emailRegex.test(email);
 
-    if (!email || !password || !name) {
+    if (!email || !password) {
       setIsEmailValid(false);
       return setError("Enter Your Details");
     }
