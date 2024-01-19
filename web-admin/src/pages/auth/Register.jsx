@@ -8,7 +8,7 @@ const Register = () => {
   const [password, setPassword] = React.useState("");
 
   return (
-    <div className=" bg-white p-5 md:w-3/4 lg:w-1/3 ">
+    <div className=" bg-white w-96 p-5 md:w-3/4 lg:w-1/3">
       <div>
         <h1 className=" text-2xl font-bold text-center pb-3">LOGIN ACCOUNT</h1>
       </div>
