@@ -3,6 +3,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCategory,
+  createCategory,
   deleteCategory,
   fetchCategory,
   selectAllCategory,
@@ -29,7 +30,18 @@ const Category = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(addCategory({ name, image }));
+    // Pass the correct payload structure to createCategory
+    dispatch(createCategory({ name, image }))
+      .unwrap()
+      .then((result) => {
+        // Handle success if needed
+        console.log("Category created successfully:", result);
+      })
+      .catch((error) => {
+        // Handle error if needed
+        console.error("Error creating category:", error);
+      });
+
     setName("");
     setImage("");
   };
@@ -63,6 +75,7 @@ const Category = () => {
           <input
             type="file"
             className="border border-dark-purple rounded-md p-2"
+            value={image}
             onChange={(e) => setImage(e.target.value)}
           />
         </div>

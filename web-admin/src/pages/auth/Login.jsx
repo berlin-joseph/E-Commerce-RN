@@ -18,6 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    
     if (token) {
       history("/dashboard");
     }
@@ -27,6 +28,7 @@ const Login = () => {
     if (auth.user.admin === true && auth.user.success === true) {
       const token = auth.user.token;
       localStorage.setItem("token", token);
+
       history("/dashboard");
       window.location.reload();
     }

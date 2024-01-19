@@ -39,7 +39,8 @@ export const createCategory = createAsyncThunk(
       const response = await axios.post(`${baseUrl}category`, { name, image });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      // Return a serializable error message or code
+      return rejectWithValue("Error creating category");
     }
   }
 );
@@ -77,6 +78,19 @@ const categorySlice = createSlice({
         state.category = action.payload;
       })
       .addCase(fetchCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(createCategory.pending, (state, action) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.category.push(action.payload);
+      })
+      .addCase(createCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
       });

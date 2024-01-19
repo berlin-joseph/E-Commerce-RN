@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProduct,
+  createProducts,
   deleteProduct,
+  fetchProducts,
   selectAllProducts,
   setSelectedProduct,
 } from "../../redux/slice/ProductSlice";
-import { selectAllCategory } from "../../redux/slice/CategorySlice";
 
 const Products = () => {
   const [name, setName] = React.useState("");
@@ -17,20 +18,30 @@ const Products = () => {
   const [featured, setFeatured] = React.useState("");
   const [brand, setBrand] = React.useState("");
   const [price, setPrice] = React.useState("");
-
   const [showModal, setShowModal] = React.useState(false);
 
   //redux
   const dispatch = useDispatch();
-  const products = useSelector(selectAllProducts);
-  const categories = useSelector(selectAllCategory);
-  console.log(categories);
+  const product = useSelector(selectAllProducts);
+  const products = product.data;
+  console.log(products);
 
-  //
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   const handleAddProducts = (e) => {
     dispatch(
-      addProduct({ name, description, category, featured, brand, price })
+      createProducts({
+        name,
+        description,
+        brand,
+        price,
+        category,
+        featured,
+      })
     );
+    console.log(name, description, brand, price, category, featured);
     setName("");
     setDescription("");
     setCategory("");
@@ -83,9 +94,7 @@ const Products = () => {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              {categories.map((category, index) => (
-                <option key={index}>{category.name}</option>
-              ))}
+              <option>category</option>
             </select>
           </div>
           <div className="flex flex-col">
@@ -156,35 +165,36 @@ const Products = () => {
                     </th>
                   </tr>
                 </thead>
-                {products.map((data, index) => (
-                  <tbody key={data.id}>
-                    <tr className="border-b dark:border-neutral-500">
-                      <td className="whitespace-nowrap px-6 py-4 font-medium">
-                        {index + 1}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {data.name}
-                      </td>
+                {Array.isArray(products) &&
+                  products.map((data, index) => (
+                    <tbody key={data._id}>
+                      <tr className="border-b dark:border-neutral-500">
+                        <td className="whitespace-nowrap px-6 py-4 font-medium">
+                          {index + 1}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4">
+                          {data.name}
+                        </td>
 
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="flex gap-5">
-                          <button>
-                            <FaEdit
-                              className="text-2xl text-blue-900"
-                              onClick={() => updateProducts(data)}
-                            />
-                          </button>
-                          <button>
-                            <FaTrash
-                              className="text-2xl text-red-900"
-                              onClick={() => handleDeleteProduct(data.id)}
-                            />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                ))}
+                        <td className="whitespace-nowrap px-6 py-4">
+                          <div className="flex gap-5">
+                            <button>
+                              <FaEdit
+                                className="text-2xl text-blue-900"
+                                onClick={() => updateProducts(data)}
+                              />
+                            </button>
+                            <button>
+                              <FaTrash
+                                className="text-2xl text-red-900"
+                                onClick={() => handleDeleteProduct(data.id)}
+                              />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
               </table>
             </div>
           </div>
