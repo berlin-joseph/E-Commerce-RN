@@ -16,20 +16,13 @@ const orderRouter = require("./routes/orderRoutes");
 dotenv.config({ path: path.join(__dirname, ".", "config", "config.env") });
 
 //cors
-const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.use(cors());
+app.options("*", cors());
 
 //middleware
 app.use(express.json());
 app.use(morgan("tiny"));
-// app.use(authJwt());
+app.use(authJwt());
 app.use(errorHandler);
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
