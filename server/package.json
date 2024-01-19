@@ -6,7 +6,7 @@
   "author": "Berlin Joe L",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "pm2 server.js",
     "build": "yarn"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.8",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0"
   }
 }
