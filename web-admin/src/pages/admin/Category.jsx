@@ -2,12 +2,8 @@ import React, { useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addCategory,
-  createCategory,
-  deleteCategory,
   fetchCategory,
   selectAllCategory,
-  setSelectedCategory,
 } from "../../redux/slice/CategorySlice";
 
 const Category = () => {
@@ -26,36 +22,6 @@ const Category = () => {
   useEffect(() => {
     dispatch(fetchCategory());
   }, [dispatch]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Pass the correct payload structure to createCategory
-    dispatch(createCategory({ name, image }))
-      .unwrap()
-      .then((result) => {
-        // Handle success if needed
-        console.log("Category created successfully:", result);
-      })
-      .catch((error) => {
-        // Handle error if needed
-        console.error("Error creating category:", error);
-      });
-
-    setName("");
-    setImage("");
-  };
-
-  const updateCategory = (selectedCategory) => {
-    setShowModal(true);
-    setModalName(selectedCategory.name);
-    setModalImage(selectedCategory.image);
-    dispatch(setSelectedCategory(selectedCategory));
-  };
-
-  const handleDeleteCategory = (id) => {
-    dispatch(deleteCategory(id));
-  };
 
   return (
     <div className=" container mx-auto h-screen p-10">
@@ -81,7 +47,7 @@ const Category = () => {
         </div>
         <button
           className="bg-dark-purple mt-5 py-5 rounded-md text-white"
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
         >
           Add Category
         </button>
@@ -124,13 +90,13 @@ const Category = () => {
                             <button>
                               <FaEdit
                                 className="text-2xl text-blue-900"
-                                onClick={() => updateCategory(data)}
+                                // onClick={() => updateCategory(data)}
                               />
                             </button>
                             <button>
                               <FaTrash
                                 className="text-2xl text-red-900"
-                                onClick={() => handleDeleteCategory(data.id)}
+                                // onClick={() => handleDeleteCategory(data.id)}
                               />
                             </button>
                           </div>

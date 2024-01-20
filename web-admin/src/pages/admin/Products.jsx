@@ -3,13 +3,14 @@ import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addProduct,
-  createProducts,
-  deleteProduct,
   fetchProducts,
+  removeProduct,
   selectAllProducts,
-  setSelectedProduct,
 } from "../../redux/slice/ProductSlice";
+import {
+  fetchCategory,
+  selectAllCategory,
+} from "../../redux/slice/CategorySlice";
 
 const Products = () => {
   const [name, setName] = React.useState("");
@@ -18,44 +19,25 @@ const Products = () => {
   const [featured, setFeatured] = React.useState("");
   const [brand, setBrand] = React.useState("");
   const [price, setPrice] = React.useState("");
+  const [image, setImage] = React.useState("");
   const [showModal, setShowModal] = React.useState(false);
 
   //redux
   const dispatch = useDispatch();
   const product = useSelector(selectAllProducts);
+  const categories = useSelector(selectAllCategory);
   const products = product.data;
-  console.log(products);
+  const Category = categories.data;
+  console.log(product, "products.jsx");
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchCategory());
   }, [dispatch]);
 
-  const handleAddProducts = (e) => {
-    dispatch(
-      createProducts({
-        name,
-        description,
-        brand,
-        price,
-        category,
-        featured,
-      })
-    );
-    console.log(name, description, brand, price, category, featured);
-    setName("");
-    setDescription("");
-    setCategory("");
-    setFeatured("");
-    setBrand("");
-    setPrice("");
-  };
-  const updateProducts = (selectedProduct) => {
-    setShowModal(true);
-    console.log(selectedProduct);
-    dispatch(setSelectedProduct(selectedProduct));
-  };
-  const handleDeleteProduct = (id) => {
-    dispatch(deleteProduct(id));
+  const handleDeleteProduct = (productId) => {
+    console.log(productId);
+    dispatch(removeProduct(productId));
   };
 
   return (
@@ -94,7 +76,10 @@ const Products = () => {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option>category</option>
+              {Array.isArray(Category) &&
+                Category?.map((data, index) => (
+                  <option key={data._id}>{data.name}</option>
+                ))}
             </select>
           </div>
           <div className="flex flex-col">
@@ -136,9 +121,17 @@ const Products = () => {
             />
           </div>
         </div>
+        <div className="flex flex-col mt-5">
+          <input
+            type="file"
+            className="border border-dark-purple rounded-md p-2"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+        </div>
         <button
           className=" bg-dark-purple mt-5 py-5 rounded-md text-white"
-          onClick={handleAddProducts}
+          // onClick={handleAddProducts}
         >
           Add Products
         </button>
@@ -146,58 +139,30 @@ const Products = () => {
       <div className=" border border-dark-purple my-5" />
       {/*  */}
       <h1 className=" text-2xl">Product List</h1>
-      <div className="flex flex-col">
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div className="overflow-hidden">
-              <table className="min-w-full text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th scope="col" className="px-6 py-4">
-                      No
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Product Name
-                    </th>
-
-                    <th scope="col" className="px-6 py-4">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                {Array.isArray(products) &&
-                  products.map((data, index) => (
-                    <tbody key={data._id}>
-                      <tr className="border-b dark:border-neutral-500">
-                        <td className="whitespace-nowrap px-6 py-4 font-medium">
-                          {index + 1}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-4">
-                          {data.name}
-                        </td>
-
-                        <td className="whitespace-nowrap px-6 py-4">
-                          <div className="flex gap-5">
-                            <button>
-                              <FaEdit
-                                className="text-2xl text-blue-900"
-                                onClick={() => updateProducts(data)}
-                              />
-                            </button>
-                            <button>
-                              <FaTrash
-                                className="text-2xl text-red-900"
-                                onClick={() => handleDeleteProduct(data.id)}
-                              />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  ))}
-              </table>
-            </div>
-          </div>
+      <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+        <div class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
+          <img
+            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+            alt="card-image"
+          />
+        </div>
+        <div class="p-6">
+          <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            UI/UX Review Check
+          </h5>
+          <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+            The place is close to Barceloneta Beach and bus stop just 2 min by
+            walk and near to "Naviglio" where you can enjoy the main night life
+            in Barcelona.
+          </p>
+        </div>
+        <div class="p-6 pt-0">
+          <button
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+            type="button"
+          >
+            Read More
+          </button>
         </div>
       </div>
 

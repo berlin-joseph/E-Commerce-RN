@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk(
-  "product/fetchProduct",
+  "product/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${baseUrl}products`);
@@ -21,30 +21,36 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-export const createProducts = createAsyncThunk(
-  "product/createProducts",
-  async (
-    { name, description, brand, price, category, featured },
-    { rejectWithValue }
-  ) => {
+export const removeProduct = createAsyncThunk(
+  "product/removeProduct",
+  async (productId, { rejectWithValue }) => {
     try {
-      const accessToken = localStorage.getItem("token");
-
-      const response = await axios.post(`${baseUrl}products`, {
-        name,
-        description,
-        brand,
-        price,
-        category,
-        isFeatured: featured,
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`${baseUrl}products/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-
       return response.data;
     } catch (error) {
-      console.error("Error creating product:", error);
-      console.error("Error response data:", error.response.data);
+      return rejectWithValue(error);
+    }
+  }
+);
 
-      return rejectWithValue(error.response.data);
+export const updateProduct = createAsyncThunk(
+  "product/removeProduct",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(`${baseUrl}products/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -52,24 +58,7 @@ export const createProducts = createAsyncThunk(
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {
-    addProduct: (state, action) => {
-      state.products.push(action.payload);
-    },
-    updateProduct: (state, action) => {
-      state.products = state.products.map((task) =>
-        task.id === action.payload.id ? action.payload : task
-      );
-    },
-    setSelectedProduct: (state, action) => {
-      state.selectedProducts = action.payload;
-    },
-    deleteProduct: (state, action) => {
-      state.products = state.products.filter(
-        (product) => product.id !== action.payload
-      );
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state, action) => {
@@ -85,23 +74,24 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = true;
       })
-      .addCase(createProducts.pending, (state, action) => {
+      .addCase(removeProduct.pending, (state, action) => {
         state.loading = true;
         state.error = false;
       })
-      .addCase(createProducts.fulfilled, (state, action) => {
+      .addCase(removeProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.products.push(action.payload);
+        state.products = Array.isArray(state.products)
+          ? state.products.filter((product) => product.id !== action.payload.id)
+          : [];
       })
-      .addCase(createProducts.rejected, (state, action) => {
+      .addCase(removeProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
       });
   },
 });
 
-export const { addProduct, updateProduct, setSelectedProduct, deleteProduct } =
-  productSlice.actions;
+export const {} = productSlice.actions;
 export const selectAllProducts = (state) => state.product.products;
 export default productSlice.reducer;
