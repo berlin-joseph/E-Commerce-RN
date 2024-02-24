@@ -16,12 +16,8 @@ const orderRouter = require("./routes/orderRoutes");
 dotenv.config({ path: path.join(__dirname, ".", "config", "config.env") });
 
 //cors
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
-
+app.use(cors());
+app.options("*", cors());
 
 //middleware
 app.use(express.json());
