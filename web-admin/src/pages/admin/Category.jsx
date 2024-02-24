@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  createCategory,
   fetchCategory,
   selectAllCategory,
 } from "../../redux/slice/CategorySlice";
@@ -22,6 +23,13 @@ const Category = () => {
   useEffect(() => {
     dispatch(fetchCategory());
   }, [dispatch]);
+
+  const handleCreateCategory = () => {
+    dispatch(createCategory({ name, image }));
+    console.log(name, image);
+    setName("");
+    setImage("");
+  };
 
   return (
     <div className=" container mx-auto h-screen p-10">
@@ -47,7 +55,7 @@ const Category = () => {
         </div>
         <button
           className="bg-dark-purple mt-5 py-5 rounded-md text-white"
-          // onClick={handleSubmit}
+          onClick={handleCreateCategory}
         >
           Add Category
         </button>

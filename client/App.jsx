@@ -1,14 +1,16 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import Navigation from './routes/Navigation';
-import {Provider} from 'react-redux';
-import {store} from './redux/store';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import Home from './src/screens/Home';
+import {responsiveWidth} from 'react-native-responsive-dimensions';
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <Navigation />
-    </Provider>
+    <SafeAreaProvider style={{}}>
+      <SafeAreaView>
+        <Home />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

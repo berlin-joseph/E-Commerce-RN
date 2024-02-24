@@ -21,6 +21,28 @@ export const fetchCategory = createAsyncThunk(
   }
 );
 
+// Define your headers here
+const token = localStorage.getItem('token')
+console.log(token);
+const headers = {
+  Authorization: `Bearer ${token}`,
+};
+
+export const createCategory = createAsyncThunk(
+  "category/createCategory",
+  async ({ name, image }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}category`,
+        { name, image },
+        { headers }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const categorySlice = createSlice({
   name: "category",
@@ -30,8 +52,8 @@ const categorySlice = createSlice({
       state.category.push(action.payload);
     },
     updateCategory: (state, action) => {
-      state.category = state.category.map((task) =>
-        task.id === action.payload.id ? action.payload : task
+      state.category = state.category.map((category) =>
+        category.id === action.payload.id ? action.payload : category
       );
     },
     setSelectedCategory: (state, action) => {
@@ -55,6 +77,19 @@ const categorySlice = createSlice({
         state.category = action.payload;
       })
       .addCase(fetchCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(createCategory.pending, (state, action) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.category = [...state.category, action.payload];
+      })
+      .addCase(createCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
       });

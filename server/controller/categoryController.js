@@ -100,7 +100,7 @@ exports.getCategoryById = async (req, res) => {
   try {
     const id = req.params.id;
     const category = await Category.findById(id);
-    if (category.length === 0) {
+    if (!category) {
       return res
         .status(500)
         .send({ success: false, message: "Category not available" });
@@ -116,6 +116,7 @@ exports.getCategoryById = async (req, res) => {
     });
   }
 };
+
 
 //update category by id - api/v1/category/:id
 exports.updateCategoryById = async (req, res) => {
